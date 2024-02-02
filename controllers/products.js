@@ -1,9 +1,14 @@
+const Product = require('../models/product');
+
 const getAllProductsStatic = async (req, res) => {
-  res.status(200).json({ msg: 'products testing route' });
+  const products = await Product.find({ name: 'accent chair' });
+  res.status(200).json({ nbHits: products.length, data: products });
 };
 
 const getAllProducts = async (req, res) => {
-  res.status(200).json({ msg: 'products route' });
+  const { featured } = req.query;
+  const products = await Product.find({ featured });
+  res.status(200).json({ nbHits: products.length, data: products });
 };
 
 module.exports = { getAllProducts, getAllProductsStatic };
